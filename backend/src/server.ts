@@ -2,6 +2,7 @@ import express from 'express';
 import './db/dbconfig'; // Initialize database connection
 import pool from './db/dbconfig';
 
+
 const app = express();
 const PORT = process.env.PORT || 3001;
 
