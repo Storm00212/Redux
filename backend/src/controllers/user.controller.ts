@@ -1,7 +1,18 @@
+/**
+ * User Controller
+ * Handles HTTP requests related to user operations such as registration, login, and retrieving users.
+ * Acts as an intermediary between routes and the UserService, managing request/response cycles.
+ */
+
 import { Request, Response } from 'express';
 import { UserService } from '../services/user.service';
 
 export class UserController {
+  /**
+   * Handles user registration.
+   * Extracts user data from request body, calls UserService to register the user,
+   * and returns the created user with a success message.
+   */
   static async register(req: Request, res: Response) {
     try {
       const { name, email, password } = req.body;
@@ -12,6 +23,11 @@ export class UserController {
     }
   }
 
+  /**
+   * Handles user login.
+   * Extracts credentials from request body, calls UserService to authenticate,
+   * and returns user data along with an authentication token.
+   */
   static async login(req: Request, res: Response) {
     try {
       const { email, password } = req.body;
@@ -22,10 +38,14 @@ export class UserController {
     }
   }
 
+  /**
+   * Retrieves all users.
+   * Calls UserService to fetch all users from the database and returns them in the response.
+   */
   static async getUsers(req: Request, res: Response) {
     try {
        const users = await UserService.getAllUsers();
-       
+
        res.status(200).json({
         message:'Successful retrieval of users',
         users,
