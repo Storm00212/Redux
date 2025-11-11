@@ -2,14 +2,20 @@
  * User Service
  * Contains business logic for user operations including registration, authentication,
  * and user data retrieval. Handles password hashing, JWT token generation, and validation.
+ *
+ * Security Features:
+ * - Password hashing with bcrypt (salt rounds: 10)
+ * - JWT tokens with 1-hour expiration
+ * - Email uniqueness validation
+ * - Centralized error handling
  */
 
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt'; // Library for password hashing
+import jwt from 'jsonwebtoken'; // Library for JWT token creation/verification
 import { UserRepository } from '../repositories/user.repositories';
 import { User, LoginUser } from '../types/user.schema';
 
-// JWT secret key from environment variables
+// JWT secret key loaded from environment variables for security
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 
 export class UserService {
