@@ -21,4 +21,20 @@ export class UserController {
       res.status(401).json({ error: error.message });
     }
   }
+
+  static async getUsers(req: Request, res: Response) {
+    try {
+       const users = await UserService.getAllUsers();
+       
+       res.status(200).json({
+        message:'Successful retrieval of users',
+        users,
+       })
+    } catch (error: any) {
+        res.status(500).json({
+            message:"User retrieval unsuccessful",
+           error: error.message,
+        })
+    }
+  }
 }
