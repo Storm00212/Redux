@@ -43,4 +43,8 @@ export class UserService {
   static async getUserById(id: number): Promise<User | null> {
     return await UserRepository.findUserById(id);
   }
+
+  static async getAllUsers(): Promise<User[]> {
+     return await UserRepository.getAllUsers()
+  }
 }
