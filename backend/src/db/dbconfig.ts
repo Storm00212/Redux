@@ -1,5 +1,6 @@
 import { Pool } from 'pg';
 import dotenv from 'dotenv';
+
 import assert = require('assert');
 
 dotenv.config();
