@@ -24,4 +24,10 @@ export class UserRepository {
     const result = await pool.query(query, [id]);
     return result.rows[0] || null;
   }
+
+  static async getAllUsers(): Promise<User[]> {
+    const query = `SELECT id, name, email, password, "createdAt" FROM users`;
+    const result = await pool.query(query);
+    return result.rows;
+  }
 }
