@@ -26,7 +26,7 @@ app.listen(PORT, async () => {
     } else{
       console.log("Database connection error ❌")
     }
-    console.log(`Server running on port ${PORT}`);
+    console.log(`Server running on http://localhost:${PORT}/api`);
   } catch (error) {
     console.log("Error connecting to the database or server error.", error)
 
