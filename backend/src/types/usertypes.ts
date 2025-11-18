@@ -15,5 +15,10 @@ export interface RegisterData {
   email: string;
   password_hash: string;
 }
-
+export interface CreateUser {
+  Username: string;
+  email: string;
+  password_hash: string;
+  
+}
 
