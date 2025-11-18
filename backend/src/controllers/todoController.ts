@@ -4,7 +4,18 @@ import { CreateTodoData, UpdateTodoData } from "../types/todotypes";
 
 const todoService = new TodoService();
 
+/**
+ * Controller class handling todo-related HTTP requests.
+ * Provides CRUD endpoints for todo management with user authentication.
+ */
 export class TodoController {
+    /**
+     * Handles requests to create a new todo item.
+     * Requires user authentication and validates input data.
+     * @param req - Express request object with todo data in body
+     * @param res - Express response object
+     * @returns JSON response with created todo or error
+     */
     static async createTodo(req: Request, res: Response) {
         try {
             const userId = (req as any).user?.id || req.body.userId;
@@ -22,6 +33,12 @@ export class TodoController {
         }
     }
 
+    /**
+     * Handles requests to retrieve all todos for the authenticated user.
+     * @param req - Express request object
+     * @param res - Express response object
+     * @returns JSON response with array of user's todos or error
+     */
     static async getTodos(req: Request, res: Response) {
         try {
             const userId = (req as any).user?.id || parseInt(req.params.userId);
@@ -35,6 +52,13 @@ export class TodoController {
         }
     }
 
+    /**
+     * Handles requests to update a specific todo item.
+     * Validates user ownership and applies partial updates.
+     * @param req - Express request object with todo ID in params and updates in body
+     * @param res - Express response object
+     * @returns JSON response with updated todo or error
+     */
     static async updateTodo(req: Request, res: Response) {
         try {
             const userId = (req as any).user?.id;
@@ -59,6 +83,13 @@ export class TodoController {
         }
     }
 
+    /**
+     * Handles requests to delete a specific todo item.
+     * Validates user ownership before deletion.
+     * @param req - Express request object with todo ID in params
+     * @param res - Express response object
+     * @returns JSON response with success message or error
+     */
     static async deleteTodo(req: Request, res: Response) {
         try {
             const userId = (req as any).user?.id;
