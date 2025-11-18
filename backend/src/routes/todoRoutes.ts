@@ -3,10 +3,16 @@ import { TodoController } from "../controllers/todoController";
 
 const router = Router();
 
-// Assuming middleware for auth sets req.user
+// POST /todo - Create a new todo for the authenticated user
 router.post("/", TodoController.createTodo);
-router.get("/", TodoController.getTodos); // For user's todos, userId from auth
+
+// GET /todo - Retrieve all todos for the authenticated user
+router.get("/", TodoController.getTodos);
+
+// PUT /todo/:id - Update a specific todo (requires user ownership)
 router.put("/:id", TodoController.updateTodo);
+
+// DELETE /todo/:id - Delete a specific todo (requires user ownership)
 router.delete("/:id", TodoController.deleteTodo);
 
 export default router;
