@@ -2,14 +2,28 @@ import { Pool } from 'pg';
 import { getPool } from '../db/config';
 import { User, RegisterData } from '../types/usertypes';
 
+/**
+ * Repository class for handling user-related database operations.
+ * Provides methods for user registration, login, and retrieval.
+ * Uses PostgreSQL connection pooling for database interactions.
+ */
 class UserRepository {
-  private poolPromise: Promise<Pool>;
+   private poolPromise: Promise<Pool>;
 
-  constructor() {
-    this.poolPromise = getPool();
-  }
+   /**
+    * Initializes the repository with a database connection pool.
+    */
+   constructor() {
+     this.poolPromise = getPool();
+   }
 
-  async register(userData: RegisterData): Promise<User> {
+   /**
+    * Registers a new user in the database.
+    * @param userData - The user data containing email and hashed password
+    * @returns Promise<User> - The created user object with database-generated fields
+    * @throws Error if registration fails
+    */
+   async register(userData: RegisterData): Promise<User> {
     const query = `
       INSERT INTO users (email, password_hash, created_at)
       VALUES ($1, $2, NOW())
@@ -27,6 +41,12 @@ class UserRepository {
     }
   }
 
+  /**
+   * Retrieves a user by email for login purposes.
+   * @param email - The user's email address
+   * @returns Promise<User | null> - User object if found, null otherwise
+   * @throws Error if database query fails
+   */
   async login(email: string): Promise<User | null> {
     const query = `
       SELECT id, email, password_hash, created_at
@@ -45,6 +65,12 @@ class UserRepository {
     }
   }
 
+  /**
+   * Retrieves a user by their unique ID.
+   * @param id - The user's unique identifier
+   * @returns Promise<User | null> - User object if found, null otherwise
+   * @throws Error if database query fails
+   */
   async getUserById(id: number): Promise<User | null> {
     const query = `
       SELECT id, email, password_hash, created_at
