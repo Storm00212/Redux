@@ -2,7 +2,18 @@ import { Request, Response } from "express";
 import { AuthService } from "../services/authService";
 import { CreateUser, RegisterData } from "../types/usertypes";
 
+/**
+ * Controller class handling authentication-related HTTP requests.
+ * Provides endpoints for user registration and login.
+ */
 export class AuthController {
+    /**
+     * Handles user registration requests.
+     * Validates input data and creates new user account.
+     * @param req - Express request object containing user registration data
+     * @param res - Express response object
+     * @returns JSON response with created user or error
+     */
     static async register(req: Request, res: Response) {
         try {
             const userData: CreateUser = req.body;
@@ -20,6 +31,13 @@ export class AuthController {
         }
     }
 
+    /**
+     * Handles user login requests.
+     * Authenticates user credentials and returns JWT token.
+     * @param req - Express request object containing login credentials
+     * @param res - Express response object
+     * @returns JSON response with token and user data or error
+     */
     static async login(req: Request, res: Response) {
         try {
             const loginData: RegisterData = req.body;
