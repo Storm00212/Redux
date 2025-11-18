@@ -5,21 +5,27 @@ import authRoutes from "./routes/authRoutes";
 import userRoutes from "./routes/userRoutes";
 import todoRoutes from "./routes/todoRoutes";
 
+// Load environment variables from .env file
 config();
+
+// Set server port from environment or default to 3000
 const PORT = process.env.PORT || 3000;
 
+// Create Express application instance
 const app: Express = express();
 
-// Middleware
+// Middleware to parse JSON request bodies
 app.use(express.json());
 
-// Routes
-app.use('/auth', authRoutes);
-app.use('/user', userRoutes);
-app.use('/todo', todoRoutes);
+// Mount route handlers for different API sections
+app.use('/auth', authRoutes);  // Authentication routes (register, login)
+app.use('/user', userRoutes);  // User management routes
+app.use('/todo', todoRoutes);  // Todo CRUD routes
 
+// Start the server and establish database connection
 app.listen(PORT, async() => {
       try {
+         // Test database connection on server start
          const dbconnect = await getPool();
          if (dbconnect){
              console.log("Database connected successfully");
@@ -30,6 +36,7 @@ app.listen(PORT, async() => {
       }
 });
 
+// Root endpoint providing API information
 app.get('/', (req, res) =>{
     res.json({
         message: "Server is up and running",
