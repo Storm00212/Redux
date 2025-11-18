@@ -1,18 +1,28 @@
+/**
+ * Database configuration module for PostgreSQL connection management.
+ * Provides connection pooling, retry logic, and graceful shutdown handling.
+ */
+
 import { Pool } from "pg";
 import assert from "assert";
 import { config } from "dotenv";
 
+// Load environment variables
 config();
+
+// Retrieve and validate database connection string from environment
 const DATABASE_URL=process.env.DATABASE_URL;
 assert(DATABASE_URL, "DATABASE_URL required")
 
+// Create PostgreSQL connection pool with optimized settings
 const pool = new Pool({
     connectionString:DATABASE_URL,
-    max: 10,
-    min: 0,
-    idleTimeoutMillis: 30000
+    max: 10,              // Maximum number of connections
+    min: 0,               // Minimum number of connections
+    idleTimeoutMillis: 30000  // Close idle connections after 30 seconds
 });
 
+// Configuration for connection retry logic
 const MAX_RETRIES = 10;
 const RETRY_DELAY_MS = 5000;
 
