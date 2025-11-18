@@ -5,6 +5,13 @@ import { CreateUser, RegisterData, User } from "../types/usertypes";
 
 const userRepo = new UserRepository();
 
+/**
+ * Validates and parses user registration credentials.
+ * Performs input validation, email format checking, and password hashing.
+ * @param body - Raw request body containing user registration data
+ * @returns Promise<CreateUser> - Validated and processed user data with hashed password
+ * @throws Error if validation fails
+ */
 const validateandParsecredentials = async (body: any): Promise<CreateUser> => {
     const { Username, email, password_hash } = body ?? {};
 
@@ -56,7 +63,18 @@ const validateandParsecredentialsforLogin = async (body: any): Promise<RegisterD
     };
 };
 
+/**
+ * Service class handling authentication-related business logic.
+ * Provides methods for user registration and login with JWT token generation.
+ */
 export class AuthService {
+    /**
+     * Registers a new user in the system.
+     * Validates input, checks for existing users, and creates new user account.
+     * @param newUser - User registration data
+     * @returns Promise<User> - Created user object
+     * @throws Error if user already exists or validation fails
+     */
     static async register(newUser: CreateUser): Promise<User> {
         try {
             const validatedUser = await validateandParsecredentials(newUser);
@@ -76,6 +94,13 @@ export class AuthService {
         }
     }
 
+    /**
+     * Authenticates a user and generates a JWT token.
+     * Validates credentials, checks password hash, and returns token with user info.
+     * @param userData - User login credentials (email and password)
+     * @returns Promise<{token: string, user: User}> - JWT token and user data (password excluded)
+     * @throws Error if user not found or password invalid
+     */
     static async login(userData: RegisterData): Promise<{ token: string; user: Omit<User, 'password_hash'> }> {
         try {
             const loginData = await validateandParsecredentialsforLogin(userData);
