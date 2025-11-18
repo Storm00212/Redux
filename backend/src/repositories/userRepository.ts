@@ -62,6 +62,25 @@ class UserRepository {
       throw new Error('Failed to fetch user');
     }
   }
+
+  async getUserByEmail(email: string): Promise<User>{
+    const query = `
+    SELECT id, email, password_hash, created_at
+    FROM users
+    WHERE email = $1
+    `;
+
+    const values = [email]
+    try {
+      const pool = await this.poolPromise;
+      const result = await pool.query(query, values);
+      return result.rows[0] || null;
+    } catch (error) {
+      console.error('Error fetching user by Email:', error);
+      throw new Error('Failed to fetch user');
+    }
+
+  }
 }
 
 export default UserRepository;
