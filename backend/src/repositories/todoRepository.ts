@@ -1,6 +1,6 @@
 import { Pool } from 'pg';
 import { getPool } from '../db/config';
-import { Todo, CreateTodoData, UpdateTodoData } from '../types/usertypes';
+import { Todo, CreateTodoData, UpdateTodoData } from '../types/todotypes';
 
 class TodoRepository {
   private poolPromise: Promise<Pool>;
